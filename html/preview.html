@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Syntax Admin Manager - Preview</title>
+<link rel="stylesheet" href="../../syx-ui/html/theme.css">
+<link rel="stylesheet" href="style.css">
+<style>body{background:#0b0710;}</style>
+</head>
+<body>
+
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="topbar-title">
+      <svg viewBox="0 0 24 24" class="icon"><path d="M12 2l7 3v6c0 5-3.4 8.7-7 10-3.6-1.3-7-5-7-10V5l7-3z"/></svg>
+      <span>ADMIN MANAGER</span>
+      <span class="count-tag" id="adminCount">0 ADMINS</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn close" id="closeBtn" title="Close (Esc)">
+        <svg viewBox="0 0 24 24" class="icon"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <section class="panel" id="adminPanel">
+    <div class="tabs" id="mainTabs">
+      <div class="tab-chip active" data-tab="admins">CURRENT ADMINS</div>
+      <div class="tab-chip" data-tab="add">ADD ADMIN</div>
+    </div>
+
+    <div class="tab-view" id="view-admins">
+      <div class="list thin-scroll" id="adminList"></div>
+    </div>
+
+    <div class="tab-view" id="view-add" style="display:none;">
+      <div class="search-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" class="icon small"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" id="playerSearch" placeholder="Search online players...">
+        </div>
+        <button class="icon-btn" id="refreshBtn" title="Refresh online list">
+          <svg viewBox="0 0 24 24" class="icon small"><path d="M4 4v5h5M20 20v-5h-5M4.6 9a8 8 0 0 1 14-3.3L20 9M19.4 15a8 8 0 0 1-14 3.3L4 15"/></svg>
+        </button>
+      </div>
+      <div class="list thin-scroll" id="playerList"></div>
+    </div>
+  </section>
+
+  <div class="hint-bar">
+    <span><b>ESC</b> Close</span>
+    <span>Admin status is tied to the player's Rockstar license - works across name/Discord/IP changes</span>
+  </div>
+</div>
+
+<script src="../../syx-ui/html/ui.js"></script>
+<script src="script.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    window.postMessage({
+      action: 'open',
+      canManage: true,
+      admins: [
+        { license: 'license:owner', name: 'Owner', super: true },
+        { license: 'license:abc123', name: 'Jordan', addedBy: 'Owner', super: false },
+      ],
+      onlinePlayers: [
+        { id: 3, name: 'Casey' },
+        { id: 7, name: 'Riley' },
+        { id: 12, name: 'Morgan' },
+      ],
+    }, '*');
+  });
+</script>
+</body>
+</html>
